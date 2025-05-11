@@ -3,6 +3,7 @@ import streamlit as st
 import pathlib
 import plotly.express as px
 import matplotlib.pyplot as plt
+import pandas as pd
 temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
@@ -20,6 +21,11 @@ if fayl:
   st.image(fayl)
   st.success(f"Bashorat: {bashorat}")
   st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+  natija = pd.DataFrame({
+    'Sinflar': model.dls.vocab,
+    'Ehtimollik (%)': ehtimollik*100
+  })
 
+  fig = px.bar(natija, x='Sinflar', y='Ehtimollik (%)', title="Bashorat ehtimolliklari")
   fig=px.bar(y=ehtimollik*100, x=model.dls.vocab)
   st.plotly_chart(fig)
