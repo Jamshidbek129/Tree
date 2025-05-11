@@ -20,7 +20,7 @@ if fayl:
 
   bashorat, id, ehtimollik=model.predict(rasm)
 
-  st.image(fayl)
+  st.image(rasm)
   st.success(f"Bashorat: {bashorat}")
   st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
   natija = pd.DataFrame({
