@@ -13,7 +13,7 @@ fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
 if fayl:
   rasm=PILImage.create(fayl)
 
-  model=load_learner('C:\TATU_darslar\Mobil ilovalar\Daraxtlar\model (1).pkl')
+  model=load_learner('model (1).pkl')
 
   bashorat, id, ehtimollik=model.predict(rasm)
 
