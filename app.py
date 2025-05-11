@@ -4,8 +4,8 @@ import pathlib
 import plotly.express as px
 import matplotlib.pyplot as plt
 import pandas as pd
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+plt = platform.system()
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
 
@@ -17,7 +17,7 @@ if fayl:
 
   bashorat, id, ehtimollik=model.predict(rasm)
 
-  st.image(fayl)
+  st.image(rasm)
   st.success(f"Bashorat: {bashorat}")
   st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
   natija = pd.DataFrame({
