@@ -4,8 +4,10 @@ import pathlib
 import plotly.express as px
 import matplotlib.pyplot as plt
 import pandas as pd
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+import platform
+
+if platform.system() == 'Windows':
+    pathlib.PosixPath = pathlib.WindowsPath
 
 st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
