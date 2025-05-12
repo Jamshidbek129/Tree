@@ -1,28 +1,28 @@
 from fastai.vision.all import *
 import streamlit as st
+from pathlib import Path
 import plotly.express as px
-import pathlib
-import platform
+import pandas as pd
 
-plt = platform.system()
-st.write(plt)  # just for debugging
-if plt == 'Linux':
-    pathlib.PosixPath = pathlib.WindowsPath  # or maybe the other way round
-
-st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
 
-# fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
-# if fayl:
-#   rasm=PILImage.create(fayl)
+# Model yo‘li
+model_path = Path("model.pkl")
+if model_path.exists():
+    model = load_learner(model_path)
+else:
+    st.error("Model fayli topilmadi!")
 
-#   model=load_learner('model.pkl')
+fayl = st.file_uploader("Rasm yuklash", type=['png', 'jpg', 'jpeg'])
 
-#   bashorat, id, ehtimollik=model.predict(rasm)
+if fayl:
+    rasm = PILImage.create(fayl)
+    bashorat, id, ehtimollik = model.predict(rasm)
 
-#   st.image(fayl)
-#   st.success(f"Bashorat: {bashorat}")
-#   st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+    st.image(fayl)
+    st.success(f"Bashorat: {bashorat}")
+    st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
 
-#   fig=px.bar(y=ehtimollik*100, x=model.dls.vocab)
-#   st.plotly_chart(fig)
+    df = pd.DataFrame({'Sinflar': model.dls.vocab, 'Ehtimollik (%)': ehtimollik*100})
+    fig = px.bar(df, x='Sinflar', y='Ehtimollik (%)', title='Ehtimolliklar')
+    st.plotly_chart(fig)
