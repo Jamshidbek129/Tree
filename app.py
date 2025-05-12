@@ -1,28 +1,26 @@
 from fastai.vision.all import *
+from fastai.vision.all import *
 import streamlit as st
-from pathlib import Path
+import pathlib
 import plotly.express as px
-import pandas as pd
+import matplotlib.pyplot as plt
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
+st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
 
-# Model yo‘li
-model_path = Path("model (1).pkl")
-if model_path.exists():
-    model = load_learner(model_path)
-else:
-    st.error("Model fayli topilmadi!")
-
-fayl = st.file_uploader("Rasm yuklash", type=['png', 'jpg', 'jpeg'])
-
+fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
 if fayl:
-    rasm = PILImage.create(fayl)
-    bashorat, id, ehtimollik = model.predict(rasm)
+  rasm=PILImage.create(fayl)
 
-    st.image(fayl)
-    st.success(f"Bashorat: {bashorat}")
-    st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+  model=load_learner('C:\TATU_darslar\Mobil ilovalar\Daraxtlar\model (1).pkl')
 
-    df = pd.DataFrame({'Sinflar': model.dls.vocab, 'Ehtimollik (%)': ehtimollik*100})
-    fig = px.bar(df, x='Sinflar', y='Ehtimollik (%)', title='Ehtimolliklar')
-    st.plotly_chart(fig)
+  bashorat, id, ehtimollik=model.predict(rasm)
+
+  st.image(fayl)
+  st.success(f"Bashorat: {bashorat}")
+  st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+
+  fig=px.bar(y=ehtimollik*100, x=model.dls.vocab)
+  st.plotly_chart(fig)
