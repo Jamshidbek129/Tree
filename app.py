@@ -1,10 +1,14 @@
 from fastai.vision.all import *
 import streamlit as st
-import pathlib
 import plotly.express as px
 import matplotlib.pyplot as plt
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+import pathlib
+import platform
+
+plt = platform.system()
+st.write(plt)  # just for debugging
+if plt == 'Linux':
+    pathlib.PosixPath = pathlib.WindowsPath  # or maybe the other way round
 
 st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
