@@ -1,5 +1,4 @@
 from fastai.vision.all import *
-from fastai.vision.all import *
 import streamlit as st
 import pathlib
 import plotly.express as px
@@ -11,16 +10,16 @@ st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
 
 fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
-if fayl:
-  rasm=PILImage.create(fayl)
 
-  model=load_learner('C:\TATU_darslar\Mobil ilovalar\Daraxtlar\model (1).pkl')
+rasm=PILImage.create(fayl)
 
-  bashorat, id, ehtimollik=model.predict(rasm)
+model=load_learner('C:\TATU_darslar\Mobil ilovalar\Daraxtlar\model (1).pkl')
 
-  st.image(fayl)
-  st.success(f"Bashorat: {bashorat}")
-  st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+bashorat, id, ehtimollik=model.predict(rasm)
 
-  fig=px.bar(y=ehtimollik*100, x=model.dls.vocab)
-  st.plotly_chart(fig)
+st.image(fayl)
+st.success(f"Bashorat: {bashorat}")
+st.info(f"Ehtimollik: {ehtimollik[id]*100:.1f}%")
+
+fig=px.bar(y=ehtimollik*100, x=model.dls.vocab)
+st.plotly_chart(fig)
