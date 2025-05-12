@@ -12,7 +12,7 @@ if plt == 'Linux':
 st.text("Assalomu aleykum")
 st.title("Daraxtlar va Gullar")
 
-fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
+# fayl=st.file_uploader("Rasm yuklash",  type=['png', 'gif', 'svg', 'jpeg'])
 # if fayl:
 #   rasm=PILImage.create(fayl)
 
